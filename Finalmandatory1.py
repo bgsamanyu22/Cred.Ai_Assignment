@@ -24,10 +24,9 @@ df_customer_work_info = pd.DataFrame({
     'work_email': df['First Name'].str.lower() + '_' + df['Last Name'].str.lower() + '@sample.com'
 })
 
-# Connect to PostgreSQL database
 conn = psycopg2.connect(
     dbname="postgres", 
-    user="final", 
+    user="postgres", 
     password="samanyu@123", 
     host="localhost", 
     port="5432"
@@ -36,25 +35,25 @@ cur = conn.cursor()
 
 cur.execute("""
 CREATE TABLE IF NOT EXISTS customer_info (
-    customer_id SERIAL PRIMARY KEY,
-    f_name VARCHAR(255),
-    l_name VARCHAR(255),
-    city VARCHAR(255),
-    country VARCHAR(255),
-    personal_phnum VARCHAR(20),
-    personal_email VARCHAR(255)
+    customer_id VARCHAR(50) PRIMARY KEY,
+    f_name VARCHAR(50),
+    l_name VARCHAR(50),
+    city VARCHAR(50),
+    country VARCHAR(50),
+    personal_phnum VARCHAR(50),
+    personal_email VARCHAR(50)
 );
 """)
 
 cur.execute("""
 CREATE TABLE IF NOT EXISTS customer_work_info (
-    customer_id INTEGER REFERENCES customer_info(customer_id),
-    full_name VARCHAR(255),
-    office_loc VARCHAR(255) DEFAULT 'Bangalore',
+    customer_id VARCHAR(50) REFERENCES customer_info(customer_id),
+    full_name VARCHAR(50),
+    office_loc VARCHAR(50) DEFAULT 'Bangalore',
     subsctiption_date DATE,
-    website VARCHAR(255),
-    work_phnum VARCHAR(20),
-    work_email VARCHAR(255)
+    website VARCHAR(50),
+    work_phnum VARCHAR(50),
+    work_email VARCHAR(50)
 );
 """)
 
@@ -74,4 +73,4 @@ conn.commit()
 cur.close()
 conn.close()
 
-print("Data has been successfully parsed and inserted into the database.")
+print("Successfull parsing!")
